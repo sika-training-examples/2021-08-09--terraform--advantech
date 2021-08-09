@@ -2,7 +2,7 @@ resource "azurerm_network_interface" "main" {
   location            = var.resource_group.location
   resource_group_name = var.resource_group.name
 
-  name = "example"
+  name = var.name
 
   ip_configuration {
     name                          = "dafault"
