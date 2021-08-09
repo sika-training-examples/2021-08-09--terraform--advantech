@@ -70,3 +70,11 @@ resource "null_resource" "prevent_destroy" {
     prevent_destroy = true
   }
 }
+
+data "azurerm_resource_group" "foo" {
+  name = "foo"
+}
+
+output "rg-foo-location" {
+  value = data.azurerm_resource_group.foo.location
+}
