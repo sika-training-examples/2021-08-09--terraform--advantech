@@ -67,6 +67,6 @@ resource "null_resource" "prevent_destroy" {
     module.postgres-1,
   ]
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
   }
 }
