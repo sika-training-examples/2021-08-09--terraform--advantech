@@ -49,3 +49,24 @@ module "vm-foo" {
   subnet         = azurerm_subnet.vms
   ssh_key        = file("~/.ssh/id_rsa.pub")
 }
+
+
+resource "random_pet" "postgres1" {
+  length = 3
+}
+
+module "postgres-1" {
+  source = "./modules/postgres"
+
+  resource_group = azurerm_resource_group.default
+  name           = random_pet.postgres1.id
+}
+
+output "postgres1-host" {
+  value = module.postgres-1.host
+}
+
+output "postgres1-password" {
+  value     = module.postgres-1.password
+  sensitive = true
+}
