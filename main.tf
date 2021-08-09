@@ -78,3 +78,14 @@ data "azurerm_resource_group" "foo" {
 output "rg-foo-location" {
   value = data.azurerm_resource_group.foo.location
 }
+
+
+resource "azurerm_resource_group" "bar" {
+  count    = 4
+  name     = "bar${count.index}"
+  location = count.index == 2 ? "eastus" : data.azurerm_resource_group.foo.location
+}
+
+output "bar" {
+  value = azurerm_resource_group.bar.*.location
+}
