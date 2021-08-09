@@ -18,3 +18,15 @@ resource "azurerm_subnet" "vms" {
   name             = "vms"
   address_prefixes = ["10.0.0.0/24"]
 }
+
+resource "azurerm_public_ip" "example" {
+  resource_group_name = azurerm_resource_group.default.name
+  location            = azurerm_resource_group.default.location
+
+  name              = "example"
+  allocation_method = "Static"
+}
+
+output "example-ip" {
+  value = azurerm_public_ip.example.ip_address
+}
