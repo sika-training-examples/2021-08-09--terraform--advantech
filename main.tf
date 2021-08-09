@@ -31,46 +31,12 @@ output "example-ip" {
   value = azurerm_public_ip.example.ip_address
 }
 
-resource "azurerm_network_interface" "example" {
-  location            = azurerm_resource_group.default.location
-  resource_group_name = azurerm_resource_group.default.name
+module "vm-example" {
+  source = "./modules/vm"
 
-  name = "example"
-
-  ip_configuration {
-    name                          = "dafault"
-    subnet_id                     = azurerm_subnet.vms.id
-    public_ip_address_id          = azurerm_public_ip.example.id
-    private_ip_address_allocation = "Dynamic"
-  }
-}
-
-resource "azurerm_linux_virtual_machine" "example" {
-  resource_group_name = azurerm_resource_group.default.name
-  location            = azurerm_resource_group.default.location
-
-  name = "example"
-  # Sizes: https://docs.microsoft.com/en-us/azure/cloud-services/cloud-services-sizes-specs
-  size           = "Standard_A1_v2"
-  admin_username = "default"
-  network_interface_ids = [
-    azurerm_network_interface.example.id,
-  ]
-
-  admin_ssh_key {
-    username   = "default"
-    public_key = file("~/.ssh/id_rsa.pub")
-  }
-
-  os_disk {
-    caching              = "ReadWrite"
-    storage_account_type = "Standard_LRS"
-  }
-
-  source_image_reference {
-    publisher = "Canonical"
-    offer     = "UbuntuServer"
-    sku       = "16.04-LTS"
-    version   = "latest"
-  }
+  resource_group = azurerm_resource_group.default
+  name           = "example"
+  public_ip      = azurerm_public_ip.example
+  subnet         = azurerm_subnet.vms
+  ssh_key        = file("~/.ssh/id_rsa.pub")
 }
