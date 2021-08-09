@@ -70,3 +70,13 @@ output "postgres1-password" {
   value     = module.postgres-1.password
   sensitive = true
 }
+
+resource "null_resource" "prevent_destroy" {
+  depends_on = [
+    module.vm-example,
+    module.postgres-1,
+  ]
+  lifecycle {
+    prevent_destroy = true
+  }
+}
