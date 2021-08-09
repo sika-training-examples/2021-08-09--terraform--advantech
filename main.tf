@@ -15,3 +15,7 @@ output "dev-sensitive" {
   }
   sensitive = true
 }
+
+module "prod" {
+  source = "./env/prod"
+}
