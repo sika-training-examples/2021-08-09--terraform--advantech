@@ -4,6 +4,7 @@ variable "resource_group" {
 
 variable "public_ip" {
   description = "Public IP Terraform object"
+  default     = null
 }
 
 variable "subnet" {
