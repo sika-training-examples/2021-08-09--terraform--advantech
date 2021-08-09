@@ -11,3 +11,4 @@
 *.tfvars
 !.EXAMPLE.tfvars
 *.backup
+*.tfplan
