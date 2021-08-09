@@ -40,3 +40,12 @@ module "vm-example" {
   subnet         = azurerm_subnet.vms
   ssh_key        = file("~/.ssh/id_rsa.pub")
 }
+
+module "vm-foo" {
+  source = "./modules/vm"
+
+  resource_group = azurerm_resource_group.default
+  name           = "foo"
+  subnet         = azurerm_subnet.vms
+  ssh_key        = file("~/.ssh/id_rsa.pub")
+}
