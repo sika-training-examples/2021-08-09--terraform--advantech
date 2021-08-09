@@ -70,22 +70,3 @@ resource "null_resource" "prevent_destroy" {
     prevent_destroy = true
   }
 }
-
-data "azurerm_resource_group" "foo" {
-  name = "foo"
-}
-
-output "rg-foo-location" {
-  value = data.azurerm_resource_group.foo.location
-}
-
-
-resource "azurerm_resource_group" "bar" {
-  count    = 4
-  name     = "bar${count.index}"
-  location = count.index == 2 ? "eastus" : data.azurerm_resource_group.foo.location
-}
-
-output "bar" {
-  value = azurerm_resource_group.bar.*.location
-}
